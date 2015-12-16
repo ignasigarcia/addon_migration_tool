@@ -13,6 +13,11 @@ class PublishStackContentRoutine extends AbstractPageRoutine
     {
         $this->batch = $batch;
         $stacks = $batch->getObjectCollection('stack');
+
+        if (!$stacks) {
+            return;
+        }
+
         foreach ($stacks->getStacks() as $stack) {
             if (!$stack->getPublisherValidator()->skipItem()) {
                 $s = Stack::getByName($stack->getName());

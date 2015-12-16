@@ -11,6 +11,11 @@ class CreateSocialLinksRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $links = $batch->getObjectCollection('social_link');
+
+        if (!$links) {
+            return;
+        }
+
         foreach ($links->getLinks() as $link) {
             if (!$link->getPublisherValidator()->skipItem()) {
                 $l = new Link();

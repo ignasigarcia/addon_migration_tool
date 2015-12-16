@@ -21,8 +21,14 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
             'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
         ));
 
+        $pages = $this->getPagesOrderedForImport($batch);
+
+        if (!$pages) {
+            return;
+        }
+
         // Now loop through all pages, and build them
-        foreach ($this->getPagesOrderedForImport($batch) as $page) {
+        foreach ($pages as $page) {
             $data = array();
             $ui = $this->getTargetItem('user', $page->getUser());
             if ($ui != '') {
@@ -50,6 +56,7 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
                 }
             }
 
+            // TODO exception if parent not found
             if ($page->getBatchPath() != '') {
                 $lastSlash = strrpos($page->getBatchPath(), '/');
                 $parentPath = substr($page->getBatchPath(), 0, $lastSlash);
@@ -65,6 +72,7 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
 
             $data['name'] = $page->getName();
             $data['cDescription'] = $page->getDescription();
+
             $parent->add($type, $data);
         }
     }

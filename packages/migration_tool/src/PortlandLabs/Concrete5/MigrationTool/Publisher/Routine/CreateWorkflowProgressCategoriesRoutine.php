@@ -10,6 +10,11 @@ class CreateWorkflowProgressCategoriesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $types = $batch->getObjectCollection('workflow_progress_category');
+
+        if (!$types) {
+            return;
+        }
+
         foreach ($types->getCategories() as $category) {
             if (!$category->getPublisherValidator()->skipItem()) {
                 $pkg = null;

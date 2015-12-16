@@ -11,6 +11,11 @@ class CreateStackStructureRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $stacks = $batch->getObjectCollection('stack');
+
+        if (!$stacks) {
+            return;
+        }
+
         foreach ($stacks->getStacks() as $stack) {
             if (!$stack->getPublisherValidator()->skipItem()) {
                 $s = Stack::getByName($stack->getName());

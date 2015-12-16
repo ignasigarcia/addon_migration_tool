@@ -11,6 +11,11 @@ class CreateThemesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $themes = $batch->getObjectCollection('theme');
+
+        if (!$themes) {
+            return;
+        }
+
         foreach ($themes->getThemes() as $theme) {
             if (!$theme->getPublisherValidator()->skipItem()) {
                 $pkg = null;

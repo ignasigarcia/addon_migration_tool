@@ -12,6 +12,11 @@ class CreatePageFeedsRoutine implements RoutineInterface
     {
         $inspector = \Core::make('import/value_inspector');
         $feeds = $batch->getObjectCollection('page_feed');
+
+        if (!$feeds) {
+            return;
+        }
+
         foreach ($feeds->getFeeds() as $feed) {
             if (!$feed->getPublisherValidator()->skipItem()) {
                 $f = new Feed();

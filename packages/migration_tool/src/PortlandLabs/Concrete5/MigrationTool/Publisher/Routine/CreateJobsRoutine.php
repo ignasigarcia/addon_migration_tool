@@ -11,6 +11,11 @@ class CreateJobsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $jobs = $batch->getObjectCollection('job');
+
+        if (!$jobs) {
+            return;
+        }
+
         foreach ($jobs->getJobs() as $job) {
             if (!$job->getPublisherValidator()->skipItem()) {
                 $pkg = null;

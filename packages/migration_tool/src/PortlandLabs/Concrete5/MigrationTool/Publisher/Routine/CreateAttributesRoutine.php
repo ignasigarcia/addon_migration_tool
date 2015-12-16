@@ -14,6 +14,11 @@ class CreateAttributesRoutine implements RoutineInterface
         /**
          * @var AttributeKey
          */
+
+        if (!$keys) {
+            return;
+        }
+
         foreach ($keys->getKeys() as $key) {
             if (!$key->getPublisherValidator()->skipItem()) {
                 $pkg = null;

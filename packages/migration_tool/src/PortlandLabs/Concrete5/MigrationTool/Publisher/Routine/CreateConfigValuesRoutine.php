@@ -10,6 +10,11 @@ class CreateConfigValuesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $values = $batch->getObjectCollection('config_value');
+
+        if (!$values) {
+            return;
+        }
+
         foreach ($values->getValues() as $value) {
             if (!$value->getPublisherValidator()->skipItem()) {
                 $pkg = null;

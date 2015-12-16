@@ -14,6 +14,11 @@ class CreatePageTypesRoutine implements RoutineInterface
         /**
          * @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType
          */
+
+        if (!$types) {
+            return;
+        }
+
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $pkg = null;

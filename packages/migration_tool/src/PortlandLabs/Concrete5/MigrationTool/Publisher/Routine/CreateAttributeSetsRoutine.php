@@ -11,6 +11,11 @@ class CreateAttributeSetsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $sets = $batch->getObjectCollection('attribute_set');
+
+        if (!$sets) {
+            return;
+        }
+
         foreach ($sets->getSets() as $set) {
             $akc = Category::getByHandle($set->getCategory());
             if (!$set->getPublisherValidator()->skipItem()) {

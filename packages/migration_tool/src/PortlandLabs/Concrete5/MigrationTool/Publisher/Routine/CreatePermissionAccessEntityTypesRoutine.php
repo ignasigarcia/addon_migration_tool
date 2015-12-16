@@ -12,6 +12,11 @@ class CreatePermissionAccessEntityTypesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $types = $batch->getObjectCollection('permission_access_entity_type');
+
+        if (!$types) {
+            return;
+        }
+
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $pkg = null;

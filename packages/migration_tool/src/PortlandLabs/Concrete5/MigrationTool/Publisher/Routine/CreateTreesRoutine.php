@@ -25,6 +25,11 @@ class CreateTreesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $values = $batch->getObjectCollection('tree');
+
+        if (!$values) {
+            return;
+        }
+
         foreach ($values->getTrees() as $t) {
             $name = (string) $t->getName();
             $tree = Topic::getByName($name);

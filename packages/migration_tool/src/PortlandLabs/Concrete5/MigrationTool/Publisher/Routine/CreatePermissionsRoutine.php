@@ -11,6 +11,11 @@ class CreatePermissionsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $keys = $batch->getObjectCollection('permission_key');
+
+        if (!$keys) {
+            return;
+        }
+
         foreach ($keys->getKeys() as $key) {
             if (!$key->getPublisherValidator()->skipItem()) {
                 $pkg = null;

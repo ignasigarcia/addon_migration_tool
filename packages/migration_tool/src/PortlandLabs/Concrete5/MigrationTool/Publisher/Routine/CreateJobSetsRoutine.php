@@ -11,6 +11,11 @@ class CreateJobSetsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $sets = $batch->getObjectCollection('job_set');
+
+        if (!$sets) {
+            return;
+        }
+
         foreach ($sets->getSets() as $set) {
             if (!$set->getPublisherValidator()->skipItem()) {
                 $pkg = null;

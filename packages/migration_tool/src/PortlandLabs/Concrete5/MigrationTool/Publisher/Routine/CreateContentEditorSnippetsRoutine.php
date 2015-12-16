@@ -11,6 +11,11 @@ class CreateContentEditorSnippetsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $snippets = $batch->getObjectCollection('content_editor_snippet');
+
+        if (!$snippets) {
+            return;
+        }
+
         foreach ($snippets->getSnippets() as $snippet) {
             if (!$snippet->getPublisherValidator()->skipItem()) {
                 $pkg = null;

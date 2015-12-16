@@ -11,6 +11,11 @@ class CreateCaptchaLibrariesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $libraries = $batch->getObjectCollection('captcha_library');
+
+        if (!$libraries) {
+            return;
+        }
+
         foreach ($libraries->getLibraries() as $library) {
             if (!$library->getPublisherValidator()->skipItem()) {
                 $pkg = null;

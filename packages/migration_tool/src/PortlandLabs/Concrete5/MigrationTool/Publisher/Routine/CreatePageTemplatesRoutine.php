@@ -11,6 +11,11 @@ class CreatePageTemplatesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $templates = $batch->getObjectCollection('page_template');
+
+        if (!$templates) {
+            return;
+        }
+
         foreach ($templates->getTemplates() as $template) {
             if (!$template->getPublisherValidator()->skipItem()) {
                 $pkg = null;
